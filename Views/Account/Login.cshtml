@@ -1,0 +1,89 @@
+﻿@model SchoolVotingApp.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Staff Login";
+}
+
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-5 col-lg-4">
+            <div class="card shadow-lg border-0 rounded-3" style="background-color: var(--bg-card); border: 1px solid var(--border-subtle) !important;">
+                
+                <div class="card-header border-0 text-center py-4" style="background-color: var(--bg-card);">
+                    <div class="mb-3">
+                        <i class="bi bi-shield-lock" style="font-size: 3rem; color: var(--lemon-green);"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0">Staff Authentication</h4>
+                    <p class="small text-muted mt-2">Access the secure management dashboard</p>
+                </div>
+
+                <div class="card-body p-4 pt-0">
+                    <form asp-action="StaffPortal" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small bg-transparent border-danger text-danger"></div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="Email" class="form-label small fw-bold text-muted">ADMIN EMAIL</label>
+                            <input asp-for="Email" class="form-control custom-input" placeholder="e.g. admin@school.com" />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Password" class="form-label small fw-bold text-muted">PASSWORD</label>
+                            <input asp-for="Password" class="form-control custom-input" type="password" placeholder="••••••••" />
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-green w-100 py-2 fw-bold mb-3 shadow-sm">
+                            SIGN IN TO DASHBOARD
+                        </button>
+                    </form>
+
+                    <div class="text-center">
+                        <a asp-action="Index" class="text-decoration-none small transition-link text-muted">
+                            <i class="bi bi-arrow-left me-1"></i> Back to Portal Selection
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Inputs now pull colors from the theme variables */
+    .custom-input {
+        background-color: var(--bg-body) !important;
+        border: 1px solid var(--border-subtle) !important;
+        color: var(--text-main) !important;
+        padding: 0.75rem;
+        transition: all 0.3s ease;
+    }
+
+        .custom-input:focus {
+            border-color: var(--lemon-green) !important;
+            box-shadow: 0 0 0 0.25rem rgba(62, 207, 142, 0.15) !important;
+            background-color: var(--bg-card) !important;
+        }
+
+    /* Professional Lemon Green Button */
+    .btn-green {
+        background-color: var(--lemon-green);
+        color: #000000;
+        border: none;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-green:hover {
+            background-color: var(--text-main);
+            color: var(--bg-body);
+            transform: translateY(-2px);
+        }
+
+    /* Link Hover Effect */
+    .transition-link:hover {
+        color: var(--lemon-green) !important;
+    }
+</style>

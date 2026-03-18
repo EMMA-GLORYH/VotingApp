@@ -1,0 +1,80 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Welcome to School Elections";
+}
+
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 85vh;">
+    <div class="text-center p-5 shadow-lg rounded-4"
+         style="max-width: 900px; width: 100%; background-color: var(--bg-card); border: 1px solid var(--border-subtle);">
+        
+        <h1 class="display-4 fw-bold mb-4">School <span style="color: var(--lemon-green);">Election</span> Portal</h1>
+        <p class="lead mb-5 text-muted">Academic Year • Secured Local Voting Network</p>
+
+        <div class="row g-4 text-start">
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm hover-green transition" style="background-color: var(--bg-body);">
+                    <div class="card-body p-5 text-center">
+                        <div class="mb-4">
+                            <i class="bi bi-person-check" style="font-size: 4rem; color: var(--lemon-green);"></i>
+                        </div>
+                        <h3 class="fw-bold">Student Portal</h3>
+                        <p class="text-muted small">Secure one-time access using your distributed token.</p>
+                        <a asp-action="VoterPortal" class="btn btn-green btn-lg w-100 py-3 rounded-2 mt-3 fw-bold shadow-sm">
+                            ACCESS BALLOT
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm hover-standard transition" style="background-color: var(--bg-body);">
+                    <div class="card-body p-5 text-center">
+                        <div class="mb-4">
+                            <i class="bi bi-shield-lock" style="font-size: 4rem;"></i>
+                        </div>
+                        <h3 class="fw-bold">Staff Management</h3>
+                        <p class="text-muted small">Election setup, token management, and real-time results.</p>
+                        <a asp-action="StaffPortal" class="btn btn-outline-secondary btn-lg w-100 py-3 rounded-2 mt-3">
+                            STAFF LOGIN
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-5 small d-flex align-items-center justify-content-center text-muted">
+            <i class="bi bi-shield-lock-fill me-2" style="color: var(--lemon-green);"></i>
+            End-to-End Encrypted Voting System
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Professional Hover Effects that respect the theme */
+    .hover-green:hover {
+        transform: translateY(-8px);
+        border: 1px solid var(--lemon-green) !important;
+        box-shadow: 0 10px 25px rgba(62, 207, 142, 0.2) !important;
+    }
+
+    .hover-standard:hover {
+        transform: translateY(-8px);
+        border: 1px solid var(--text-main) !important;
+        box-shadow: 0 10px 25px rgba(128, 128, 128, 0.1) !important;
+    }
+
+    .transition {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Override for the outline button in light/dark mode */
+    .btn-outline-secondary {
+        border-color: var(--border-subtle);
+        color: var(--text-main);
+    }
+
+        .btn-outline-secondary:hover {
+            background-color: var(--text-main);
+            color: var(--bg-body);
+        }
+</style>

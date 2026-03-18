@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SchoolVoting</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        :root {
+            --lemon-green: #3ecf8e;
+            --bg-body: #050505;
+            --bg-card: #111111;
+            --text-main: #ffffff;
+            --border-subtle: #222222;
+            --transition-speed: 0.4s;
+        }
+
+        [data-bs-theme="light"] {
+            --bg-body: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-main: #212529;
+            --border-subtle: #dee2e6;
+        }
+
+        body { 
+            background-color: var(--bg-body); 
+            color: var(--text-main); 
+            transition: background-color 0.3s ease; 
+            overflow: hidden; /* Essential for the Sticky Sidebar/Scrollable Body layout */
+        }
+
+        /* --- GLOBAL LOADER ANIMATION --- */
+        #global-loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--bg-body); z-index: 9999;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
+        }
+
+        .loader-content { animation: pulseScale 2s infinite ease-in-out; }
+        
+        /* Use double @@ to escape the Razor engine */
+        @@keyframes pulseScale {
+        0% { transform: scale(0.95); opacity: 0.8; }
+        50% { transform: scale(1); opacity: 1; }
+        100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        /* --- BODY CONTENT FADE-IN --- */
+        .page-fade-in {
+            animation: fadeInBody 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        @@keyframes fadeInBody {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- NAVBAR & UI --- */
+        .navbar { 
+            background-color: var(--bg-card) !important; 
+            border-bottom: 1px solid var(--border-subtle) !important;
+            z-index: 1050; /* Ensure it stays above content */
+        }
+        .navbar-brand { color: var(--lemon-green) !important; font-weight: 800; letter-spacing: 1px; }
+        
+        /* Custom Scrollbar for the scrollable dashboard */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-body); }
+        ::-webkit-scrollbar-thumb { background: var(--lemon-green); border-radius: 10px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="global-loader" class="d-flex align-items-center justify-content-center">
+        <div class="text-center loader-content">
+            <div class="spinner-border" style="width: 3.5rem; height: 3.5rem; color: var(--lemon-green);" role="status"></div>
+            <p class="mt-4 fw-bold text-muted small text-uppercase tracking-widest" style="letter-spacing: 3px;">
+                <span class="text-white">LAN</span> Syncing...
+            </p>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar navbar-expand-sm shadow-sm sticky-top">
+            <div class="container-fluid">
+                <a class="navbar-brand d-flex align-items-center" asp-controller="Account" asp-action="Index">
+                    <i class="bi bi-cpu-fill me-2"></i> VOTING COMMAND
+                </a>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+                    <ul class="navbar-nav align-items-center gap-2">
+                        <li class="nav-item dropdown">
+                            <button class="nav-link btn btn-link" id="bd-theme" data-bs-toggle="dropdown">
+                                <i class="bi bi-circle-half"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                                <li><button class="dropdown-item" data-bs-theme-value="light"><i class="bi bi-sun-fill me-2 text-warning"></i>Light</button></li>
+                                <li><button class="dropdown-item" data-bs-theme-value="dark"><i class="bi bi-moon-stars-fill me-2 text-primary"></i>Dark</button></li>
+                                <li><button class="dropdown-item" data-bs-theme-value="auto"><i class="bi bi-laptop me-2"></i>System</button></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <div class="vr mx-2 h-100 text-white-50"></div>
+                        </li>
+                        <li class="nav-item">
+                            <span class="badge bg-success-subtle text-success border border-success p-2">
+                                <i class="bi bi-broadcast me-1"></i> LAN: 192.168.1.5
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-fade-in">
+        @RenderBody()
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Loader Logic
+        window.addEventListener('load', function () {
+            const loader = document.getElementById('global-loader');
+            loader.style.opacity = '0';
+            setTimeout(() => { loader.style.visibility = 'hidden'; }, 600);
+        });
+
+        // Re-trigger loader on link clicks
+        document.querySelectorAll('a:not([target="_blank"]):not([href^="#"])').forEach(link => {
+            link.addEventListener('click', () => {
+                const loader = document.getElementById('global-loader');
+                loader.style.visibility = 'visible';
+                loader.style.opacity = '1';
+            });
+        });
+
+        // Theme Switcher Logic
+        const setTheme = t => {
+            const theme = t === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : t;
+            document.documentElement.setAttribute('data-bs-theme', theme);
+            localStorage.setItem('theme', t);
+        };
+        document.querySelectorAll('[data-bs-theme-value]').forEach(el => 
+            el.addEventListener('click', () => setTheme(el.getAttribute('data-bs-theme-value'))));
+        setTheme(localStorage.getItem('theme') || 'auto');
+    </script>
+</body>
+</html>
