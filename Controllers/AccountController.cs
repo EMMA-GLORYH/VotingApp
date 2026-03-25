@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SchoolVotingApp.Models;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 
 namespace SchoolVotingApp.Controllers
 {
