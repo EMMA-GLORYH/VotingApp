@@ -4,105 +4,29 @@
 }
 
 <div class="row g-0">
-    <nav class="col-md-3 col-lg-2 sidebar-fixed shadow-sm">
-        <div class="pt-4 px-3 d-flex flex-column h-100">
-            <div class="text-center mb-4">
-                <i class="bi bi-shield-check-fill text-success" style="font-size: 2.2rem;"></i>
-                <h6 class="fw-bold small text-uppercase mt-2 mb-0" style="letter-spacing: 1px;">Admin Hub</h6>
-                <div class="badge bg-success-subtle text-success mt-2" style="font-size: 0.65rem;">ONLINE</div>
-            </div>
+    @* SIDEBAR COLUMN *@
+    <aside class="col-md-3 col-lg-2 sidebar-wrapper d-none d-md-block">
+        @Html.Partial("_AdminSidebar")
+    </aside>
 
-            <div class="flex-grow-1 overflow-auto custom-scrollbar">
-                <ul class="nav flex-column gap-1" id="adminMenu">
-                    
-                    <li class="nav-item">
-                        <a class="nav-link active" asp-controller="Admin" asp-action="Dashboard">
-                            <i class="bi bi-speedometer2 me-2"></i> Overview
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link d-flex justify-content-between align-items-center collapsed" data-bs-toggle="collapse" href="#voterMenu">
-                            <span><i class="bi bi-people me-2"></i> Voter Control</span>
-                            <i class="bi bi-chevron-down small transition-icon"></i>
-                        </a>
-                        <div class="collapse" id="voterMenu" data-bs-parent="#adminMenu">
-                            <ul class="nav flex-column ms-3 mt-1 small">
-                                <li><a class="nav-link py-1 opacity-75" asp-controller="Admin" asp-action="VoterTokenHub">Voter Registry</a></li>
-                                <li><a class="nav-link py-1 opacity-75" asp-controller="Admin" asp-action="VoterTokenHub">Token Vault</a></li>
-                                <li><a class="nav-link py-1 opacity-75" asp-controller="Admin" asp-action="VoterTokenHub">Bulk Import (CSV)</a></li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link d-flex justify-content-between align-items-center collapsed" data-bs-toggle="collapse" href="#electionMenu">
-                            <span><i class="bi bi-clipboard-data me-2"></i> Election Setup</span>
-                            <i class="bi bi-chevron-down small transition-icon"></i>
-                        </a>
-                        <div class="collapse" id="electionMenu" data-bs-parent="#adminMenu">
-                            <ul class="nav flex-column ms-3 mt-1 small">
-                                <li><a class="nav-link py-1 opacity-75" asp-controller="Admin" asp-action="ElectionManager">Schedule & Rules</a></li>
-                                <li><a class="nav-link py-1 opacity-75" asp-controller="Admin" asp-action="ElectionManager">Manage Positions</a></li>
-                                <li><a class="nav-link py-1 opacity-75" asp-controller="Admin" asp-action="ElectionManager">Manage Candidates</a></li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link d-flex justify-content-between align-items-center collapsed" data-bs-toggle="collapse" href="#networkMenu">
-                            <span><i class="bi bi-pc-display me-2"></i> LAN Monitor</span>
-                            <i class="bi bi-chevron-down small transition-icon"></i>
-                        </a>
-                        <div class="collapse" id="networkMenu" data-bs-parent="#adminMenu">
-                            <ul class="nav flex-column ms-3 mt-1 small">
-                                <li><a class="nav-link py-1 opacity-75" asp-controller="Admin" asp-action="NetworkTerminals">Active Terminals</a></li>
-                                <li><a class="nav-link py-1 opacity-75" asp-controller="Admin" asp-action="NetworkTerminals">Kiosk Control</a></li>
-                                <li><a class="nav-link py-1 opacity-75" asp-controller="Admin" asp-action="NetworkTerminals">IP Whitelist</a></li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link d-flex justify-content-between align-items-center collapsed" data-bs-toggle="collapse" href="#securityMenu">
-                            <span><i class="bi bi-safe2 me-2"></i> Security Vault</span>
-                            <i class="bi bi-chevron-down small transition-icon"></i>
-                        </a>
-                        <div class="collapse" id="securityMenu" data-bs-parent="#adminMenu">
-                            <ul class="nav flex-column ms-3 mt-1 small">
-                                <li><a class="nav-link py-1 opacity-75" asp-controller="Admin" asp-action="SecurityVault">Audit Logs</a></li>
-                                <li><a class="nav-link py-1 opacity-75" asp-controller="Admin" asp-action="SecurityVault">Database Backup</a></li>
-                                <li><a class="nav-link py-1 opacity-75" asp-controller="Admin" asp-action="SecurityVault">System Recovery</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="pb-4 mt-auto border-top border-secondary border-opacity-10 pt-3">
-                <button class="btn btn-sm btn-outline-danger w-100 rounded-pill mb-2">
-                    <i class="bi bi-stop-circle me-1"></i> EMERGENCY STOP
-                </button>
-                <p class="text-center text-muted mb-0" style="font-size: 10px;">Network Server: 192.168.1.5</p>
-            </div>
-        </div>
-    </nav>
-
-    <main class="col-md-9 ms-sm-auto col-lg-10 content-scrollable px-md-4 py-4">
+    @* MAIN CONTENT COLUMN *@
+    <main class="col-md-9 col-lg-10 content-scrollable px-md-4 py-4">
         
+        @* Header *@
         <div class="d-flex justify-content-between align-items-end pb-3 mb-4 border-bottom border-secondary border-opacity-20">
             <div>
                 <h2 class="fw-bold mb-0">System <span style="color: var(--lemon-green);">Intelligence</span></h2>
                 <p class="text-muted small mb-0">Real-time telemetry for Local Voting Terminals</p>
             </div>
-            <button class="btn btn-sm btn-outline-success rounded-pill px-4">RUN SIMULATION</button>
+            <button class="btn btn-sm btn-outline-success rounded-pill px-4" onclick="runSim()">RUN SIMULATION</button>
         </div>
 
+        @* Telemetry Tiles *@
         <div class="row g-3 mb-5">
             <div class="col-md-3">
                 <div class="card theme-card border-0 p-3 shadow-sm text-center">
                     <span class="text-muted small fw-bold">TURNOUT</span>
-                    <h2 class="fw-bold text-success mb-0">74.2%</h2>
+                    <h2 class="fw-bold text-success mb-0" id="stat-turnout">74.2%</h2>
                 </div>
             </div>
             <div class="col-md-3">
@@ -125,24 +49,39 @@
             </div>
         </div>
 
+        @* Table Monitor *@
         <div class="card theme-card border-0 shadow-sm mb-5">
-            <div class="card-header bg-transparent border-0 pt-4 px-4">
+            <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between">
                 <h5 class="fw-bold mb-0"><i class="bi bi-broadcast text-success me-2"></i>LAN Terminal Monitor</h5>
+                <span class="badge bg-dark text-success border border-success border-opacity-25">@ViewBag.ServerStatus</span>
             </div>
             <div class="card-body p-4">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle custom-table">
+                    <table class="table table-hover align-middle custom-table mb-0">
                         <thead class="text-muted small text-uppercase">
-                            <tr><th>Terminal</th><th>IP Address</th><th>Status</th><th>Voter</th><th>Action</th></tr>
+                            <tr>
+                                <th>Terminal</th>
+                                <th>IP Address</th>
+                                <th>Status</th>
+                                <th>Active Voter</th>
+                                <th class="text-end">Action</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            @for(int i=1; i<=10; i++) {
+                            @for(int i=1; i<=8; i++) {
                                 <tr>
                                     <td class="fw-bold">PC-@(i < 10 ? "0"+i : i)</td>
-                                    <td>192.168.1.@(100+i)</td>
-                                    <td><span class="badge bg-success-subtle text-success">Active</span></td>
-                                    <td>STU-@(800+i)</td>
-                                    <td><button class="btn btn-sm btn-outline-secondary py-0">Reset</button></td>
+                                    <td class="font-monospace opacity-75">192.168.1.@(100+i)</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="spinner-grow spinner-grow-sm text-success me-2" style="width: 8px; height: 8px;"></span>
+                                            <span class="badge bg-success-subtle text-success">Active</span>
+                                        </div>
+                                    </td>
+                                    <td class="font-monospace small">STU-@(800+i)</td>
+                                    <td class="text-end">
+                                        <button class="btn btn-sm btn-dark border-secondary px-3" style="font-size: 0.7rem;">RESET</button>
+                                    </td>
                                 </tr>
                             }
                         </tbody>
@@ -151,65 +90,43 @@
             </div>
         </div>
 
-        <div class="card theme-card border-0 p-4 mb-5 text-center">
-            <h5 class="text-muted opacity-50"><i class="bi bi-bar-chart-fill me-2"></i>Result Aggregator Module Ready</h5>
+        @* Placeholder *@
+        <div class="card theme-card border-0 p-4 mb-5 text-center border-dashed">
+            <h5 class="text-muted opacity-50 fw-light">
+                <i class="bi bi-bar-chart-fill me-2"></i>Result Aggregator Module Standby...
+            </h5>
         </div>
-
     </main>
 </div>
 
+@section Scripts {
+    <script>
+        function runSim() {
+            console.log("Telemetry simulation started on Node: 192.168.1.5");
+        }
+    </script>
+}
+
 <style>
-    /* Fixed Sidebar Logic - Maintains position on scroll */
-    .sidebar-fixed {
-        position: fixed; 
-        top: 0; 
-        left: 0; 
-        height: 100vh;
+    .sidebar-wrapper {
         background-color: var(--bg-card);
         border-right: 1px solid var(--border-subtle);
-        z-index: 1000;
-        padding-top: 20px;
+        height: calc(100vh - 70px);
+        position: sticky;
+        top: 0;
     }
-
-    /* Scrollable Body Logic - Allows content to scroll behind/beside sidebar */
     .content-scrollable {
-        height: 100vh; 
+        height: calc(100vh - 70px); 
         overflow-y: auto;
-        scrollbar-width: thin;
-        scrollbar-color: var(--lemon-green) transparent;
-        /* Padding top to account for any top nav if added later */
     }
-
-    /* Nav Item Transitions & Animations */
-    .transition-icon { transition: transform 0.3s ease; }
-    .nav-link:not(.collapsed) .transition-icon { transform: rotate(180deg); }
-
-    .nav-link { 
-        padding: 0.8rem 1.2rem; 
-        border-radius: 8px; 
-        color: var(--text-main); 
-        transition: all 0.2s ease; 
-        font-size: 0.95rem; 
-    }
-    .nav-link:hover { 
-        background: rgba(62, 207, 142, 0.05); 
-        color: var(--lemon-green); 
-    }
-    .nav-link.active { 
-        background: rgba(62, 207, 142, 0.1); 
-        color: var(--lemon-green) !important; 
-        font-weight: bold; 
-    }
-
-    /* Card & Table Styling */
-    .theme-card { 
-        background-color: var(--bg-card) !important; 
-        border: 1px solid var(--border-subtle) !important; 
-        color: var(--text-main); 
-    }
+    .theme-card { border-radius: 12px; }
     .custom-table { color: var(--text-main); }
-    .custom-table td, .custom-table th { border-bottom: 1px solid var(--border-subtle); }
-
-    /* Hide ugly scrollbars on the sidebar menu */
-    .custom-scrollbar::-webkit-scrollbar { width: 0; }
+    .custom-table td, .custom-table th { 
+        border-bottom: 1px solid var(--border-subtle); 
+        padding: 1rem 0.75rem;
+    }
+    .border-dashed {
+        border: 2px dashed var(--border-subtle) !important;
+        background: transparent !important;
+    }
 </style>
